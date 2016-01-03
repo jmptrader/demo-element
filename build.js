@@ -478,7 +478,7 @@ System.register("demo", ["npm:aurelia-framework@1.0.0-beta.1.0.7", "inline-loade
         function Demo(element) {
           _classCallCheck(this, _Demo);
           this.id = Demo.id++;
-          this.main = '/inline-modules/' + this.id + '/' + element.getAttribute('main');
+          this.main = System.baseURL + 'inline-modules/' + this.id + '/' + element.getAttribute('main');
           this.modules = [{
             name: 'Result',
             isResult: true

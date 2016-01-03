@@ -39,7 +39,7 @@ export class Demo {
 
   constructor(element) {
     this.id = Demo.id++;
-    this.main = `/inline-modules/${this.id}/${element.getAttribute('main')}`;
+    this.main = `${System.baseURL}inline-modules/${this.id}/${element.getAttribute('main')}`;
     this.modules = [{ name: 'Result', isResult: true }];
     this.activeModule = this.modules[0];
 
