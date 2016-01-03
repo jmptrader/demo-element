@@ -1,0 +1,17 @@
+.au-demo-result {
+  padding: 15px;
+}
+
+.au-demo-code {
+  background-color: white;
+  padding: 0px;
+}
+.au-demo-code > pre {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
+.au-demo-code > pre > code {
+  padding: 15px;
+  margin: 0px;
+}
