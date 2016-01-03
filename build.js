@@ -423,10 +423,12 @@ System.register("demo", ["npm:aurelia-framework@1.0.0-beta.1.0.7", "inline-loade
   var customElement,
       processContent,
       inject,
+      inlineView,
       addResource,
       fixIndent,
       decodeHtml,
       getLanguage,
+      demoView,
       Demo;
   var _createClass = (function() {
     function defineProperties(target, props) {
@@ -457,6 +459,7 @@ System.register("demo", ["npm:aurelia-framework@1.0.0-beta.1.0.7", "inline-loade
       customElement = _aureliaFramework.customElement;
       processContent = _aureliaFramework.processContent;
       inject = _aureliaFramework.inject;
+      inlineView = _aureliaFramework.inlineView;
     }, function(_inlineLoader) {
       addResource = _inlineLoader.addResource;
     }, function(_utils) {
@@ -465,6 +468,7 @@ System.register("demo", ["npm:aurelia-framework@1.0.0-beta.1.0.7", "inline-loade
       getLanguage = _utils.getLanguage;
     }, function(_demoCss) {}],
     execute: function() {
+      demoView = '\n<template>\n  <require from="./syntax-highlight"></require>\n\n  <ul class="nav nav-tabs">\n    <li role="presentation" repeat.for="module of modules"\n        class="${activeModule === module ? \'active\' : \'\'}">\n      <a href="#" click.delegate="activeModule = module">\n        ${module.name}\n        <small show.bind="module.isResult" class="glyphicon glyphicon-flash"></small>\n      </a>\n    </li>\n  </ul>\n\n  <div class="au-demo-result" show.bind="activeModule.isResult">\n    <compose view-model.bind="main"></compose>\n  </div>\n  <div class="au-demo-code" repeat.for="module of modules.slice(1)" show.bind="activeModule === module">\n    <pre><code class="${module.language}" syntax-highlight>${module.source}</code></pre>\n  </div>\n</template>';
       Demo = (function() {
         _createClass(Demo, null, [{
           key: 'id',
@@ -503,6 +507,7 @@ System.register("demo", ["npm:aurelia-framework@1.0.0-beta.1.0.7", "inline-loade
           element.innerHTML = '';
         }
         var _Demo = Demo;
+        Demo = inlineView(demoView)(Demo) || Demo;
         Demo = inject(Element)(Demo) || Demo;
         Demo = processContent(false)(Demo) || Demo;
         Demo = customElement('demo')(Demo) || Demo;

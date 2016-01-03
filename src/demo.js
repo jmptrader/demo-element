@@ -1,11 +1,34 @@
-import {customElement, processContent, inject} from 'aurelia-framework';
+import {customElement, processContent, inject, inlineView} from 'aurelia-framework';
 import {addResource} from './inline-loader';
 import {fixIndent, decodeHtml, getLanguage} from './utils';
 import './demo.css!';
 
+const demoView = `
+<template>
+  <require from="./syntax-highlight"></require>
+
+  <ul class="nav nav-tabs">
+    <li role="presentation" repeat.for="module of modules"
+        class="\${activeModule === module ? 'active' : ''}">
+      <a href="#" click.delegate="activeModule = module">
+        \${module.name}
+        <small show.bind="module.isResult" class="glyphicon glyphicon-flash"></small>
+      </a>
+    </li>
+  </ul>
+
+  <div class="au-demo-result" show.bind="activeModule.isResult">
+    <compose view-model.bind="main"></compose>
+  </div>
+  <div class="au-demo-code" repeat.for="module of modules.slice(1)" show.bind="activeModule === module">
+    <pre><code class="\${module.language}" syntax-highlight>\${module.source}</code></pre>
+  </div>
+</template>`;
+
 @customElement('demo')
 @processContent(false)
 @inject(Element)
+@inlineView(demoView)
 export class Demo {
   static id = 0;
 
